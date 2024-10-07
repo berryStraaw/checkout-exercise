@@ -23,11 +23,13 @@ class Checkout
   #add item to basket
   #if item is already in basket +1 to the count
   def add_item_to_basket(item)
-    #TO-DO
-    #add error catching on items without prices
-
     item = item.to_sym
-    basket[item] ? basket[item] += 1 : basket[item] = 1
+
+    if prices[item]
+      basket[item] ? basket[item] += 1 : basket[item] = 1
+    else
+      raise "Item '#{item}' not found in the price menu, skipping item"
+    end
 
     #Potential feature to bring up:
     #call calculate total each time we add item to basket

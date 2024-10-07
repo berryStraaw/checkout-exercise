@@ -100,7 +100,20 @@ RSpec.describe Checkout do
         expect(total).to eq(600)
       end
     end
+
+    context 'when adding an item without a price' do
+      before do
+        checkout.add_item_to_basket(:apple)
+      end
+
+      it 'raises an error when the item is not in the price list' do
+        expect { checkout.add_item_to_basket(:car) }.to raise_error("Item 'car' not found in the price menu, skipping item")
+      end
+
+      it 'returns the price of items with a price' do
+        expect(total).to eq(10)
+      end
+    end
+
   end
-  #TO DO:
-  # add item without price
 end
